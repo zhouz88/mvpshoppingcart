@@ -17,6 +17,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     HomeContract.IHomePresenter presenter;
     HomeRecyclerViewAdapter adapter;
     HomeSpanSizeLookUp lookup;
+    SwipeRefreshLayout swipe;
     @Override
     protected int getLayoutId() {
         return R.layout.home_fragment;
@@ -24,7 +25,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void initViews() {
-        SwipeRefreshLayout swipe = find(R.id.home_swiperefresh);
+        swipe = find(R.id.home_swiperefresh);
         RecyclerView rv = find(R.id.home_recyclerview);
         swipe.setOnRefreshListener(this);
         GridLayoutManager manager = new GridLayoutManager(getActivity(),
@@ -41,12 +42,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
+        swipe.setRefreshing(false);
         presenter.getData();
     }
 
     @Override
     public void onGoodsSuccess(List<Goods> goods) {
-        Log.e("right", goods.size()+"onGoods");
         lookup.update(goods);
         adapter.setGoods(goods);
     }
