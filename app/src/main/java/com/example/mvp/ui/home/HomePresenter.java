@@ -22,7 +22,7 @@ public class HomePresenter implements HomeContract.IHomePresenter {
 
     @Override
     public void getData() {
-        homeModel.getData().observeOn(Schedulers.io())
+        homeModel.getData().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<BaseBean<List<Goods>>>() {
                     @Override
